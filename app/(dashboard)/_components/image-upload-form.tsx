@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Form,
   FormControl,
@@ -8,32 +8,29 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Pencil } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import z from "zod";
-interface TitleFormProps {
-  initialData: string;
-  jobId: string;
-}
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Pencil } from "lucide-react";
+import ImageUploader from "@/components/image-uploader";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
-  title: z.string().min(1, "Title is required"),
+  imageUrl: z.string().min(1, "Please upload a job image."),
 });
 
-const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
+interface ImageUploadFormProps {
+  initialData: string;
+}
+
+const ImageUploaderForm = ({ initialData }: ImageUploadFormProps) => {
   const [editToggle, setEditToggle] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: initialData,
+      imageUrl: initialData,
     },
   });
   const {
@@ -43,15 +40,7 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
   const changeEditToggle = () => setEditToggle(!editToggle);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await axios.put("/api/jobs/" + jobId, values);
-      changeEditToggle();
-      toast.success("Job updated");
-      router.refresh();
-    } catch (error) {
-      toast.error("Failed to edit job title.");
-      console.log(error);
-    }
+    console.log(values);
   };
   return (
     <div>
@@ -62,7 +51,7 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
         >
           <FormField
             control={form.control}
-            name="title"
+            name="imageUrl"
             render={({ field }) => (
               <FormItem>
                 <div className="w-full flex justify-between items-center">
@@ -86,11 +75,7 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
 
                 <FormControl>
                   {editToggle ? (
-                    <Input
-                      className="font-medium bg-white"
-                      placeholder="e.g Full Stack Web Developer"
-                      {...field}
-                    />
+                    <ImageUploader {...field} />
                   ) : (
                     <h4 className="text-sm">{field.value}</h4>
                   )}
@@ -112,4 +97,4 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
   );
 };
 
-export default TitleForm;
+export default ImageUploaderForm;

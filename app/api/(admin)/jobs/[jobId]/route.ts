@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-export const PATCH = async (
+export const PUT = async (
   req: Request,
   { params }: { params: { jobId: string } }
 ) => {
@@ -25,3 +25,4 @@ export const PATCH = async (
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
+

@@ -16,6 +16,7 @@ export const POST = async (req: Request) => {
       },
     });
     return NextResponse.json({ job }, { status: 201 });
+
   } catch (error) {
     console.log(`[JOB POST] error `, error);
     return new NextResponse("Internal Server Error", { status: 500 });

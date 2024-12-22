@@ -1,5 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -8,32 +12,38 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Combobox } from "@/components/combo-box";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import z from "zod";
-interface TitleFormProps {
-  initialData: string;
-  jobId: string;
-}
 
 const formSchema = z.object({
-  title: z.string().min(1, "Title is required"),
+  categoryId: z
+    .string({
+      required_error: "Please select a category.",
+    })
+    .min(1, "Please select a category"),
 });
 
-const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
-  const [editToggle, setEditToggle] = useState<boolean>(false);
+type Option = {
+  label: string;
+  value: string;
+};
+
+interface CategoryFormProps {
+  initialData: string;
+  options: Option[];
+  jobId: string;
+}
+const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps) => {
   const router = useRouter();
+  const [editToggle, setEditToggle] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: initialData,
+      categoryId: initialData || "",
     },
   });
   const {
@@ -42,6 +52,8 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
 
   const changeEditToggle = () => setEditToggle(!editToggle);
 
+  const currentCategory = options.find((v) => v.value === initialData)?.label;
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.put("/api/jobs/" + jobId, values);
@@ -49,7 +61,7 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
       toast.success("Job updated");
       router.refresh();
     } catch (error) {
-      toast.error("Failed to edit job title.");
+      toast.error("Failed to edit job category.");
       console.log(error);
     }
   };
@@ -62,12 +74,12 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
         >
           <FormField
             control={form.control}
-            name="title"
+            name="categoryId"
             render={({ field }) => (
               <FormItem>
                 <div className="w-full flex justify-between items-center">
                   <FormLabel className="text-[16px] font-semibold">
-                    Job Title
+                    Job Category
                   </FormLabel>
                   <div
                     onClick={changeEditToggle}
@@ -86,13 +98,11 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
 
                 <FormControl>
                   {editToggle ? (
-                    <Input
-                      className="font-medium bg-white"
-                      placeholder="e.g Full Stack Web Developer"
-                      {...field}
-                    />
+                    <Combobox options={options} {...field} />
                   ) : (
-                    <h4 className="text-sm">{field.value}</h4>
+                    <h4 className="text-sm">
+                      {currentCategory || "No category selected."}
+                    </h4>
                   )}
                 </FormControl>
                 <FormMessage />
@@ -112,4 +122,4 @@ const TitleForm = ({ initialData, jobId }: TitleFormProps) => {
   );
 };
 
-export default TitleForm;
+export default CategoryForm;

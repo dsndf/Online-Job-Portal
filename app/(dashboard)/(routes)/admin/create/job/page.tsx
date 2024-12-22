@@ -37,6 +37,10 @@ const CreateJob = () => {
     formState: { isSubmitting },
   } = form;
 
+  /**
+   * Handles job create form submit. 
+   * @param values 
+   */ 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { data } = await axios.post("/api/jobs", values, {

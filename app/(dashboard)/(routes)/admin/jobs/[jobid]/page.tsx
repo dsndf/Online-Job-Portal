@@ -1,3 +1,4 @@
+import CategoryForm from "@/app/(dashboard)/_components/category-form";
 import JobPublishAction from "@/app/(dashboard)/_components/job-publish-action";
 import TitleForm from "@/app/(dashboard)/_components/title-form";
 import Banner from "@/components/banner";
@@ -7,6 +8,8 @@ import { ArrowLeft, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import { db } from "@/lib/db";
+import ImageUploaderForm from "@/app/(dashboard)/_components/image-upload-form";
 
 const JobEditDetailsPage = async ({
   params: { jobid },
@@ -24,9 +27,9 @@ const JobEditDetailsPage = async ({
       userId,
     },
   });
+  const categories = await db?.category.findMany();
 
   if (!job) return redirect("/admin/jobs");
-
   const requiredFields = [job?.title, job?.imageUrl, job?.description];
   const completedFields = requiredFields.filter(Boolean).length;
   const isComplete = requiredFields.every(Boolean);
@@ -57,13 +60,27 @@ const JobEditDetailsPage = async ({
         />
       </div>
       <Banner label="This job is not published" />
+
       <div className="grid grid-cols-1 md:grid-cols-2 mt-16">
         <div>
           <div className="flex justify-start items-center gap-2 mb-4">
             <IconBadge icon={LayoutDashboard} />
             <h5 className="text-xl">Customize your job</h5>
           </div>
+
           <TitleForm initialData={job.title} jobId={jobid} />
+          <br />
+          <CategoryForm
+            initialData={job.categoryId || ""}
+            jobId={jobid}
+            options={
+              categories
+                ? categories.map((v) => ({ label: v.name, value: v.id }))
+                : []
+            }
+          />
+          <br />
+          <ImageUploaderForm initialData={job.imageUrl || ""} />
         </div>
       </div>
     </div>
