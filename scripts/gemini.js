@@ -36,40 +36,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var client_1 = require("@prisma/client");
-var db = new client_1.PrismaClient();
-var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var result, error_1;
+exports.generateGeminiResponse = void 0;
+var generative_ai_1 = require("@google/generative-ai");
+var genAI = new generative_ai_1.GoogleGenerativeAI("AIzaSyBGf9hDUm2DsxqxO5RbesM8acsr9nyR4rU");
+var model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+var generateGeminiResponse = function (prompt) { return __awaiter(void 0, void 0, void 0, function () {
+    var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, db.category.createMany({
-                        data: [
-                            { "name": "Information Technology" },
-                            { "name": "Healthcare" },
-                            { "name": "Finance" },
-                            { "name": "Education" },
-                            { "name": "Engineering" },
-                            { "name": "Marketing" },
-                            { "name": "Sales" },
-                            { "name": "Human Resources" },
-                            { "name": "Customer Service" },
-                            { "name": "Manufacturing" },
-                            { "name": "Construction" },
-                            { "name": "Arts and Entertainment" }
-                        ]
-                    })];
+            case 0: return [4 /*yield*/, model.generateContent(prompt)];
             case 1:
                 result = _a.sent();
-                console.log("Categories created.");
-                return [3 /*break*/, 3];
-            case 2:
-                error_1 = _a.sent();
-                console.log(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                console.log(result.response.text().trim());
+                return [2 /*return*/];
         }
     });
 }); };
-main();
+exports.generateGeminiResponse = generateGeminiResponse;
+(0, exports.generateGeminiResponse)("Please provide a brief, concise description (2-3 sentences) of the key responsibilities and qualifications for the position of React Developer. Focus on the core duties and essential skills required for this role");

@@ -30,6 +30,7 @@ const JobEditDetailsPage = async ({
   const categories = await db?.category.findMany();
 
   if (!job) return redirect("/admin/jobs");
+
   const requiredFields = [job?.title, job?.imageUrl, job?.description];
   const completedFields = requiredFields.filter(Boolean).length;
   const isComplete = requiredFields.every(Boolean);
@@ -80,7 +81,7 @@ const JobEditDetailsPage = async ({
             }
           />
           <br />
-          <ImageUploaderForm initialData={job.imageUrl || ""} />
+          <ImageUploaderForm jobId={jobid} initialData={job.imageUrl || ""} />
         </div>
       </div>
     </div>

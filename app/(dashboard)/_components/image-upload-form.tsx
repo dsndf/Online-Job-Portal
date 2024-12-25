@@ -15,6 +15,10 @@ import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import ImageUploader from "@/components/image-uploader";
 import { Button } from "@/components/ui/button";
+import { deleteObject, ref } from "firebase/storage";
+import { storage } from "@/firebase/config";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, "Please upload a job image."),
@@ -22,10 +26,15 @@ const formSchema = z.object({
 
 interface ImageUploadFormProps {
   initialData: string;
+  jobId: string;
 }
 
-const ImageUploaderForm = ({ initialData }: ImageUploadFormProps) => {
+const ImageUploaderForm = ({ initialData, jobId }: ImageUploadFormProps) => {
   const [editToggle, setEditToggle] = useState<boolean>(false);
+  const [storagePath, setStoragePath] = useState<string>("");
+
+  const onStoragePathChange = (value: string) => setStoragePath(value);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,14 +42,37 @@ const ImageUploaderForm = ({ initialData }: ImageUploadFormProps) => {
       imageUrl: initialData,
     },
   });
+
   const {
     formState: { isSubmitting },
   } = form;
 
   const changeEditToggle = () => setEditToggle(!editToggle);
 
+  const onCancel = async () => {
+    try {
+      if (storagePath) {
+        const deleteRef = ref(storage, storagePath);
+        await deleteObject(deleteRef);
+        form.reset({ imageUrl: "" });
+      }
+      changeEditToggle();
+    } catch (error) {
+      toast.error("Failed to delete a image file from storage.");
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      const result = await axios.put("/api/jobs/" + jobId, values, {
+        withCredentials: true,
+      });
+      router.refresh();
+      changeEditToggle();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to edit job image.");
+    }
   };
   return (
     <div>
@@ -56,10 +88,10 @@ const ImageUploaderForm = ({ initialData }: ImageUploadFormProps) => {
               <FormItem>
                 <div className="w-full flex justify-between items-center">
                   <FormLabel className="text-[16px] font-semibold">
-                    Job Title
+                    Job Image
                   </FormLabel>
                   <div
-                    onClick={changeEditToggle}
+                    onClick={!editToggle ? changeEditToggle : onCancel}
                     className="flex items-center gap-1 font-semibold text-sm"
                   >
                     {!editToggle ? (
@@ -75,9 +107,14 @@ const ImageUploaderForm = ({ initialData }: ImageUploadFormProps) => {
 
                 <FormControl>
                   {editToggle ? (
-                    <ImageUploader {...field} />
+                    <ImageUploader
+                      {...field}
+                      onStoragePathChange={onStoragePathChange}
+                    />
                   ) : (
-                    <h4 className="text-sm">{field.value}</h4>
+                    <div className="rounded-md w-full h-[200px] overflow-hidden bg-white">
+                      <img src={field.value} className="w-full h-full" alt="" />
+                    </div>
                   )}
                 </FormControl>
                 <FormMessage />
