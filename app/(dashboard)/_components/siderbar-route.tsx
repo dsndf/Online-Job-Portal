@@ -24,18 +24,18 @@ const SidebarRoute = ({ label, icon: Icon, href }: SidebarRouteParams) => {
     <button onClick={onClick} className="w-full relative">
       <div
         className={cn(
-          "h-full px-6 py-4 flex items-center justify-start gap-4 font-[500] text-gray-800/90 hover:bg-purple-200/20 transition-all duration-500",
-          isActive && "bg-purple-700/15 text-purple-700 hover:bg-purple-700/20"
+          "h-full px-6 py-4 text-sm flex items-center justify-start gap-4 hover:bg-secondary transition-all duration-500",
+          isActive && "text-primary bg-secondary"
         )}
       >
-        {<Icon />}
+        {<Icon className="w-4 h-4" />}
         {label}
       </div>
       {/* highlighter */}
       <span
         className={cn(
           isActive &&
-            "absolute right-0 top-0 bottom-0 w-1 rounded-md bg-purple-700"
+            "absolute right-0 top-0 bottom-0 w-1 rounded-md bg-primary"
         )}
       ></span>
     </button>

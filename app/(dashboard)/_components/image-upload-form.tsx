@@ -78,7 +78,7 @@ const ImageUploaderForm = ({ initialData, jobId }: ImageUploadFormProps) => {
     <div>
       <Form {...form}>
         <form
-          className="bg-gray-200 p-4 rounded-md"
+          className="border-secondary border shadow-sm p-4 rounded-md"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
@@ -87,7 +87,7 @@ const ImageUploaderForm = ({ initialData, jobId }: ImageUploadFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="w-full flex justify-between items-center">
-                  <FormLabel className="text-[16px] font-semibold">
+                  <FormLabel className="text-md font-semibold">
                     Job Image
                   </FormLabel>
                   <div
@@ -112,9 +112,15 @@ const ImageUploaderForm = ({ initialData, jobId }: ImageUploadFormProps) => {
                       onStoragePathChange={onStoragePathChange}
                     />
                   ) : (
-                    <div className="rounded-md w-full h-[200px] overflow-hidden bg-white">
-                      <img src={field.value} className="w-full h-full" alt="" />
-                    </div>
+                    field.value && (
+                      <div className="rounded-md w-full h-[200px] overflow-hidden bg-white">
+                        <img
+                          src={field.value}
+                          className="w-full h-full"
+                          alt=""
+                        />
+                      </div>
+                    )
                   )}
                 </FormControl>
                 <FormMessage />

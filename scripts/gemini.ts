@@ -6,7 +6,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
 export const generateGeminiResponse = async (prompt: string) => {
-
     const result = await model.generateContent(prompt);
-    console.log(result.response.text().trim());
+    console.log(result.response.text().trim().replace(/```/g, ""));
+    return result.response.text().trim().replace(/```/g, "")
 }

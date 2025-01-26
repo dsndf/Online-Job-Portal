@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import ToastProvider from "./_provider/ToastProvider";
+import ToastProvider from "@/_provider/toast-provider";
+import { ThemeProvider } from "@/_provider/theme-provider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,9 +22,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
-        <ClerkProvider> {children}</ClerkProvider>
-        <ToastProvider />
+      <body className={`${poppins.className} antialiased bg-background`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProvider>{children}</ClerkProvider>
+          <ToastProvider />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,31 +2,34 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { LucideIcon } from "lucide-react";
 
-const backgroundVariant = cva("rounded-full flex justify-center items-center w-fit", {
-  variants: {
-    variant: {
-      default: "bg-purple-100",
-      success: "bg-emerald-100",
+const backgroundVariant = cva(
+  "rounded-full shadow-sm flex justify-center items-center w-fit",
+  {
+    variants: {
+      variant: {
+        default: "border border-secondary",
+        success: "bg-emerald-100",
+      },
+      size: {
+        default: "p-4",
+        sm: "p-2",
+      },
     },
-    size: {
-      default: "p-4",
-      sm: "p-2",
+    defaultVariants: {
+      variant: "default",
+      size: "default",
     },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
+  }
+);
 
 const iconVariant = cva("", {
   variants: {
     variant: {
-      default: "text-purple-700",
+      default: "text-primary",
       success: "text-emerald-700",
     },
     size: {
-      default: "h-8 w-8",
+      default: "h-7 w-7",
       sm: "h-4 w-4",
     },
   },
@@ -45,7 +48,7 @@ interface IconBadgeProps extends BackgroundVariantProps, IconVariantProps {
 
 const IconBadge = ({ icon: Icon, variant, size }: IconBadgeProps) => {
   return (
-    <div className={cn(backgroundVariant({variant,size}))}>
+    <div className={cn(backgroundVariant({ variant, size }))}>
       <Icon className={cn(iconVariant({ variant, size }))} />
     </div>
   );

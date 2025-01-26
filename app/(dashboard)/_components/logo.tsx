@@ -8,8 +8,8 @@ const acme = Acme({
 
 const Logo = () => {
   return (
-    <div className={`${acme.className} px-6`}>
-      <h1 className="text-4xl   text-purple-700">Hire</h1>
+    <div className={`${acme.className} bg-background px-6 z-10`}>
+      <h1 className="text-3xl  text-blue-600 dark:text-blue-400">NextHire</h1>
     </div>
   );
 };

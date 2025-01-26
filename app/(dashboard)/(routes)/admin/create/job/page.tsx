@@ -38,9 +38,9 @@ const CreateJob = () => {
   } = form;
 
   /**
-   * Handles job create form submit. 
-   * @param values 
-   */ 
+   * Handles job create form submit.
+   * @param values
+   */
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { data } = await axios.post("/api/jobs", values, {
@@ -55,11 +55,11 @@ const CreateJob = () => {
   };
 
   return (
-    <div className="h-full flex justify-center items-center p-6">
+    <div className="h-full flex justify-center items-center  p-6">
       <div>
         {" "}
-        <h3 className="text-3xl font-semibold">Name your job</h3>
-        <p>
+        <h3 className="text-xl font-semibold">Name your job</h3>
+        <p className="text-sm">
           What would you like to name your job? Don't worry you can change it
           later.
         </p>

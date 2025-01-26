@@ -3,11 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { AlertCircle, TriangleAlert } from "lucide-react";
 
 const bannerVariant = cva(
-  "p-4 border text-center text-sm flex gap-2 items-center w-full rounded-md shadow-md",
+  "p-4  text-center text-sm flex gap-2 items-center w-full rounded-md shadow-md",
   {
     variants: {
       variant: {
-        warning: "bg-yellow-500/50 text-yellow-800",
+        warning:
+          "dark:bg-yellow-500/20 dark:text-yellow-500 text-yellow-800 bg-yellow-500/50",
         error: "bg-red-700/50 text-red-800",
       },
     },

@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import { db } from "@/lib/db";
 import ImageUploaderForm from "@/app/(dashboard)/_components/image-upload-form";
+import ShortDescriptionForm from "@/app/(dashboard)/_components/short-description-form";
 
 const JobEditDetailsPage = async ({
   params: { jobid },
@@ -41,16 +42,16 @@ const JobEditDetailsPage = async ({
       <div>
         <Link
           href={"/admin/jobs"}
-          className="flex items-center justify-start gap-2"
+          className="flex text-sm items-center justify-start gap-2"
         >
-          <ArrowLeft />
+          <ArrowLeft className="w-4 h-4" />
           Back
         </Link>
       </div>
       <div className="flex justify-between items-center mb-4">
         <div className="mt-4">
-          <h1 className="text-2xl mb-2 font-semibold">Job Setup</h1>
-          <p className="text-gray-500">
+          <h1 className="text-xl mb-2 font-semibold">Job Setup</h1>
+          <p className="text-muted-foreground">
             Complete All Fields ({completedFields}/{totalFields})
           </p>
         </div>
@@ -65,8 +66,8 @@ const JobEditDetailsPage = async ({
       <div className="grid grid-cols-1 md:grid-cols-2 mt-16">
         <div>
           <div className="flex justify-start items-center gap-2 mb-4">
-            <IconBadge icon={LayoutDashboard} />
-            <h5 className="text-xl">Customize your job</h5>
+            <IconBadge icon={LayoutDashboard} size="" />
+            <h5 className="text-lg">Customize your job</h5>
           </div>
 
           <TitleForm initialData={job.title} jobId={jobid} />
@@ -82,6 +83,11 @@ const JobEditDetailsPage = async ({
           />
           <br />
           <ImageUploaderForm jobId={jobid} initialData={job.imageUrl || ""} />
+          <br />
+          <ShortDescriptionForm
+            jobId={jobid}
+            initialData={job.short_description}
+          />
         </div>
       </div>
     </div>

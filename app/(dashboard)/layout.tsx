@@ -11,14 +11,12 @@ const DashboardPageLayout = ({ children }: { children: ReactNode }) => {
       </header>
 
       {/* Sidebar */}
-      <div className="hidden md:block">
+      <div className="hidden md:block  bg-background">
         <Sidebar />
       </div>
 
       {/* main content */}
-      <main className=" h-full md:pl-96">
-        {children}
-      </main>
+      <main className="h-full md:pl-80 ">{children}</main>
     </div>
   );
 };

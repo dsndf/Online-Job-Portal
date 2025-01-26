@@ -1,14 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
+import { LogOut, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import React from "react";
 
 const NavbarRoutes = () => {
+  //Hooks states
   const pathname = usePathname();
+  const { setTheme, theme } = useTheme();
+
   const isAdminPage = pathname.startsWith("/admin");
   const isPlayerPage = pathname.startsWith("/jobs");
   const isCompaniesPage = pathname.startsWith("/companies");
@@ -38,6 +42,14 @@ const NavbarRoutes = () => {
       <Link href={"/profile"}>
         <UserButton />
       </Link>
+      <Button
+        variant={"ghost"}
+        size={"icon"}
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      >
+        <Sun className=" dark:hidden w-[1.2rem] h-[1.2rem]" />
+        <Moon className="hidden dark:block  w-[1.2rem] h-[1.2rem]" />
+      </Button>
     </div>
   );
 };

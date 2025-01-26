@@ -4,7 +4,7 @@ import SidebarRoutes from "./sidebar-routes";
 
 const Sidebar = () => {
   return (
-    <div className="md:border-r bg-white w-96 flex-col fixed inset-0 py-6">
+    <div className="md:border-r md:border-r-secondary bg-background w-80 flex-col fixed inset-0 py-6 ">
       {/* logo */}
       <Logo />
       <div className="mt-4">

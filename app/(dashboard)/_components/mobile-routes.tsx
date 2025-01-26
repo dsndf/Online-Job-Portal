@@ -6,11 +6,11 @@ import { Menu } from "lucide-react";
 
 const MobileRoutes = () => {
   return (
-    <Sheet>
+    <Sheet >
       <SheetTrigger asChild>
           <Menu />
       </SheetTrigger>
-      <SheetContent className="bg-white p-0" side={"left"}>
+      <SheetContent className="bg-white p-0 w-80" side={"left"}>
         <Sidebar />
       </SheetContent>
     </Sheet>

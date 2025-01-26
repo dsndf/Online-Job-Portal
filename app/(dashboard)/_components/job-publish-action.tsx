@@ -24,7 +24,7 @@ const JobPublishAction = ({
   return (
     <div className="flex gap-2 justify-end items-center">
       <Button disabled={disabled || isLoading}>Publish</Button>
-      <Button disabled={isLoading} size={"icon"} variant={"destructive"}>
+      <Button disabled={isLoading} size={"icon"} variant={"secondary"}>
         <Trash className="h-5 w-5" />
       </Button>
     </div>

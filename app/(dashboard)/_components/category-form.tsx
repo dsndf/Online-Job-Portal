@@ -69,7 +69,7 @@ const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps) => {
     <div>
       <Form {...form}>
         <form
-          className="bg-gray-200 p-4 rounded-md"
+          className="border-secondary border shadow-sm p-4 rounded-md"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
@@ -78,7 +78,7 @@ const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="w-full flex justify-between items-center">
-                  <FormLabel className="text-[16px] font-semibold">
+                  <FormLabel className="text-md font-semibold">
                     Job Category
                   </FormLabel>
                   <div

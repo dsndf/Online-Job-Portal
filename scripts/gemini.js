@@ -47,10 +47,9 @@ var generateGeminiResponse = function (prompt) { return __awaiter(void 0, void 0
             case 0: return [4 /*yield*/, model.generateContent(prompt)];
             case 1:
                 result = _a.sent();
-                console.log(result.response.text().trim());
-                return [2 /*return*/];
+                console.log(result.response.text().trim().replace(/```/g, ""));
+                return [2 /*return*/, result.response.text().trim().replace(/```/g, "")];
         }
     });
 }); };
 exports.generateGeminiResponse = generateGeminiResponse;
-(0, exports.generateGeminiResponse)("Please provide a brief, concise description (2-3 sentences) of the key responsibilities and qualifications for the position of React Developer. Focus on the core duties and essential skills required for this role");
