@@ -9,7 +9,7 @@ const JobsPage = () => {
       <div className="flex justify-end p-6">
         <Link href={"/admin/create/job"}>
           <Button>
-            <Plus /> New Job
+            <Plus className="w-4 h-5 mr-2" /> New Job
           </Button>
         </Link>
       </div>

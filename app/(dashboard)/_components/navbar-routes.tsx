@@ -28,7 +28,7 @@ const NavbarRoutes = () => {
             size={"default"}
             className="font-semibold"
           >
-            <LogOut className="mr-2 text-xl" /> <p>Exist</p>
+            <LogOut className="mr-2 text-xl w-4 h-4" /> <p>Exist</p>
           </Button>
         </Link>
       ) : (

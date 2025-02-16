@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { generateGeminiResponse } from "@/scripts/gemini";
+import toast from "react-hot-toast";
 
 // Form schema
 const formSchema = z.object({
@@ -50,7 +51,10 @@ const ShortDescriptionForm = ({
   });
 
   const generateShortDescriptionUsingGemini = async () => {
-    if (!jobTitle.length) return;
+    if (!jobTitle.length) {
+      toast.error("Please enter job title.");
+      return;
+    }
     setGeneratingRes(true);
     try {
       const result = await generateGeminiResponse(
@@ -80,7 +84,7 @@ const ShortDescriptionForm = ({
       <div>
         <Form {...form}>
           <form
-            className="border border-secondary shadow-md p-4 rounded-md"
+            className="border border-secondary shadow-sm p-4 rounded-md"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             {/* Form field for the job shortDescription */}

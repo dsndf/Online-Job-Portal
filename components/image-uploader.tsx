@@ -19,6 +19,7 @@ const ImageUploader = ({
 }: ImageUploaderProps) => {
   const [progress, setProgress] = useState<number>(0);
   const fileInputEle = useRef<HTMLInputElement | null>(null);
+  const [url, setUrl] = useState<string>("");
 
   const uploadImage = (file: File) => {
     const uuid = crypto.randomUUID();
@@ -56,6 +57,7 @@ const ImageUploader = ({
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           onChange(downloadURL);
+          setUrl(downloadURL);
         });
       }
     );
@@ -75,7 +77,7 @@ const ImageUploader = ({
 
   return (
     <div className="rounded-md w-full h-[200px] overflow-hidden">
-      {!value ? (
+      {!url ? (
         <div className="h-full bg-white  flex items-center justify-center flex-col">
           <input
             ref={fileInputEle}
@@ -91,7 +93,7 @@ const ImageUploader = ({
         </div>
       ) : (
         <div className="h-full bg-white flex items-center justify-center">
-          <img src={value} className="w-full h-full" alt="" />
+          <img src={url} className="w-full h-full" alt="" />
         </div>
       )}
     </div>

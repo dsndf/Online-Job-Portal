@@ -25,7 +25,7 @@ const SidebarRoute = ({ label, icon: Icon, href }: SidebarRouteParams) => {
       <div
         className={cn(
           "h-full px-6 py-4 text-sm flex items-center justify-start gap-4 hover:bg-secondary transition-all duration-500",
-          isActive && "text-primary bg-secondary"
+          isActive && "bg-secondary"
         )}
       >
         {<Icon className="w-4 h-4" />}

@@ -11,6 +11,11 @@ import React from "react";
 import { db } from "@/lib/db";
 import ImageUploaderForm from "@/app/(dashboard)/_components/image-upload-form";
 import ShortDescriptionForm from "@/app/(dashboard)/_components/short-description-form";
+import ShiftTimingForm from "@/app/(dashboard)/_components/shift-timing-form";
+import HourlyRateForm from "@/app/(dashboard)/_components/hourly-rate-form";
+import WorkModeForm from "@/app/(dashboard)/_components/work-mode";
+import YearsOfExperienceForm from "@/app/(dashboard)/_components/years-experience-form";
+import DescriptionForm from "@/app/(dashboard)/_components/description-form";
 
 const JobEditDetailsPage = async ({
   params: { jobid },
@@ -62,11 +67,10 @@ const JobEditDetailsPage = async ({
         />
       </div>
       <Banner label="This job is not published" />
-
       <div className="grid grid-cols-1 md:grid-cols-2 mt-16">
         <div>
           <div className="flex justify-start items-center gap-2 mb-4">
-            <IconBadge icon={LayoutDashboard} size="" />
+            <IconBadge icon={LayoutDashboard} />
             <h5 className="text-lg">Customize your job</h5>
           </div>
 
@@ -86,10 +90,26 @@ const JobEditDetailsPage = async ({
           <br />
           <ShortDescriptionForm
             jobId={jobid}
-            initialData={job.short_description}
+            initialData={job.short_description || ""}
           />
-        </div>
-      </div>
+          <br />
+          <ShiftTimingForm
+            initialData={job?.shiftTiming || ""}
+            jobId={job?.id}
+          />
+          <br />
+          <HourlyRateForm initialData={job?.hourlyRate || ""} jobId={job?.id} />
+          <br />
+          <WorkModeForm initialData={job?.workMode || ""} jobId={job?.id} />
+          <br />
+          <YearsOfExperienceForm
+            initialData={job?.yearsOfExperience || ""}
+            jobId={job?.id}
+          />
+        </div>{" "}
+      </div>{" "}
+      <br />
+      <DescriptionForm initialData={job?.description || ""} jobId={job?.id} />
     </div>
   );
 };
