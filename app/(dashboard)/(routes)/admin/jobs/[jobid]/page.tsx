@@ -9,6 +9,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { db } from "@/lib/db";
+import { ClipboardList } from "lucide-react";
 import ImageUploaderForm from "@/app/(dashboard)/_components/image-upload-form";
 import ShortDescriptionForm from "@/app/(dashboard)/_components/short-description-form";
 import ShiftTimingForm from "@/app/(dashboard)/_components/shift-timing-form";
@@ -16,6 +17,7 @@ import HourlyRateForm from "@/app/(dashboard)/_components/hourly-rate-form";
 import WorkModeForm from "@/app/(dashboard)/_components/work-mode";
 import YearsOfExperienceForm from "@/app/(dashboard)/_components/years-experience-form";
 import DescriptionForm from "@/app/(dashboard)/_components/description-form";
+import JobTagsForm from "@/app/(dashboard)/_components/job-tags-form";
 
 const JobEditDetailsPage = async ({
   params: { jobid },
@@ -67,7 +69,7 @@ const JobEditDetailsPage = async ({
         />
       </div>
       <Banner label="This job is not published" />
-      <div className="grid grid-cols-1 md:grid-cols-2 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mt-16">
         <div>
           <div className="flex justify-start items-center gap-2 mb-4">
             <IconBadge icon={LayoutDashboard} />
@@ -107,6 +109,13 @@ const JobEditDetailsPage = async ({
             jobId={job?.id}
           />
         </div>{" "}
+        <div>
+          <div className="flex justify-start items-center gap-2 mb-4">
+            <IconBadge icon={ClipboardList} />
+            <h5 className="text-lg">Job Requirements</h5>
+          </div>
+          <JobTagsForm jobId={jobid} initialData={job?.tags || []} />
+        </div>
       </div>{" "}
       <br />
       <DescriptionForm initialData={job?.description || ""} jobId={job?.id} />

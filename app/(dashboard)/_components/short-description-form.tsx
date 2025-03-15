@@ -84,7 +84,7 @@ const ShortDescriptionForm = ({
       <div>
         <Form {...form}>
           <form
-            className="border border-secondary shadow-sm p-4 rounded-md"
+            className="border border-border bg-secondary/20 shadow-sm p-4 rounded-md"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             {/* Form field for the job shortDescription */}

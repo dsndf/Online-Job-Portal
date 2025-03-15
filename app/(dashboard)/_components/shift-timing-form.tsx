@@ -85,7 +85,7 @@ const ShiftTimingForm = ({ initialData, jobId }: ShiftTimingFormProps) => {
     <div>
       <Form {...form}>
         <form
-          className="border-secondary border shadow-sm p-4 rounded-md w-full"
+          className="border border-border bg-secondary/20 shadow-sm p-4 rounded-md w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField

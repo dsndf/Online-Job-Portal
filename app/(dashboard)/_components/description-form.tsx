@@ -58,6 +58,7 @@ const DescriptionForm = ({ initialData, jobId }: DescriptionFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      console.log({values})
       await axios.put("/api/jobs/" + jobId, values);
       changeEditToggle();
       toast.success("Job updated");
@@ -97,7 +98,7 @@ const DescriptionForm = ({ initialData, jobId }: DescriptionFormProps) => {
     <div className="">
       <Form {...form}>
         <form
-          className="border-secondary border shadow-sm p-4 rounded-md w-full"
+          className="border border-border bg-secondary/20 shadow-sm p-4 rounded-md w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField

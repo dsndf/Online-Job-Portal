@@ -69,7 +69,7 @@ const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps) => {
     <div>
       <Form {...form}>
         <form
-          className="border-secondary border shadow-sm p-4 rounded-md"
+          className="border border-border bg-secondary/20 shadow-sm p-4 rounded-md"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
